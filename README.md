@@ -6,6 +6,7 @@
 
 Functional Skill Creator is an engineering methodology, **designed for complex Skill maintenance and iteration.**
 Combined with trace logging and unit testing, it makes Skills **modular, traceable, and testable**:
+
 - Treat each `Step` as a `Function` with explicit `Input/Output` (pure function first)
 - `SKILL.md` only orchestrates the pipeline of `Function`s, consuming only `external inputs` and `reference dependencies`
 - Shared rules across `Function`s go into `references/`
@@ -15,36 +16,33 @@ Combined with trace logging and unit testing, it makes Skills **modular, traceab
 
 ## Quick Start
 
-The repository includes one main functional skill:
-
-- `fskill-creator`: Unified skill for creating, maintaining, and migrating functional skills; internally contains create / migrate sub-skill lanes.
-
-Install it with [skills.sh](https://skills.sh/) / the Skills CLI (works with Cursor, Claude Code, Codex, PromptScript, and [70+ agents](https://github.com/vercel-labs/skills#supported-agents)):
+### Install
 
 ```bash
-# Project install (default; required for PromptScript and some other agents)
 npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -y
 ```
 
-Add `-g` only if your agent supports global install (for example Cursor or Claude Code). PromptScript does **not** support `-g` and will fail with `does not support global skill installation`.
+Install via [skills.sh](https://skills.sh/). Add `-a <agent>` to target one agent; add `-g` only if it supports global install.
 
-To target specific agents, pass `-a` (repeatable), for example `-a cursor -a claude-code -a promptscript`.
+---
 
-Prefer letting your Agent use this Skill rather than maintaining a separate CLI logic:
+### Usage
 
-```text
-Use fskill-creator to create a functional skill for <workflow>.
-```
+**Create** — new functional skill from a workflow brief:
 
 ```text
-Use fskill-creator to migrate <path-to-existing-SKILL.md> into a functional skill.
+/fskill-creator create a functional skill for <workflow>
 ```
 
-When creating or migrating, pass `include_report` and `include_unittest` to control trace logging and test scaffolding (both enabled by default; set to `false` to disable).
+**Migrate** — convert an existing monolithic `SKILL.md`:
 
-`fskill-creator` itself is also a functional skill: the main `SKILL.md` only handles orchestration and routing, create / migrate pre-analysis lives in `sub-skills/`, shared artifact generation lives in main `functions/*.md`, shared rules live in `references/*.md`, and deterministic helpers live under `scripts/`. When someone installs or copies only the `fskill-creator` directory, none of its required scripts are missed.
+```text
+/fskill-creator migrate <path-to-SKILL.md>
+```
 
-When creating or migrating, you can choose whether to generate `tools/log_viewer.mjs` and `tools/tester_viewer.mjs`. If not explicitly specified, `fskill-creator` will explain the purpose of these two viewers and ask whether they are needed.
+> Slash syntax depends on your agent. In **Cursor**, `@fskill-creator` works too; natural-language prompts also work everywhere.
+
+Optional: `include_report`, `include_unittest`, `include_viewers` (on by default; set to `false` to skip).
 
 ## Why
 
@@ -104,7 +102,10 @@ flowchart TB
   style S4 fill:#fde8e8,stroke:#c53030
 ```
 
+
+
 Functional Skill Creator provides an engineering methodology that makes Skills **modular, traceable, and testable**:
+
 - Break each step into a `Function` with explicit Input/Output
 - `SKILL.md` only orchestrates the pipeline of `Function`s, consuming only `external inputs` and `reference dependencies`
 - Shared rules across `Function`s go into `references/`
@@ -141,8 +142,9 @@ flowchart TB
   style LOG fill:#ebf8ff,stroke:#2b6cb0
 ```
 
-Functional Skill does not aim to make Skills complex, but to put complexity where it belongs: judgment goes to Functions, rules go into references, deterministic actions go to scripts, and regression behavior solidifies into testcases.
 
+
+Functional Skill does not aim to make Skills complex, but to put complexity where it belongs: judgment goes to Functions, rules go into references, deterministic actions go to scripts, and regression behavior solidifies into testcases.
 
 ## When to Use
 
