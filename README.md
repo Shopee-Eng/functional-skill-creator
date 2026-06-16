@@ -19,13 +19,16 @@ The repository includes one main functional skill:
 
 - `fskill-creator`: Unified skill for creating, maintaining, and migrating functional skills; internally contains create / migrate sub-skill lanes.
 
-Install it with [skills.sh](https://skills.sh/) / the Skills CLI (works with Cursor, Claude Code, Codex, and [70+ agents](https://github.com/vercel-labs/skills#supported-agents)):
+Install it with [skills.sh](https://skills.sh/) / the Skills CLI (works with Cursor, Claude Code, Codex, PromptScript, and [70+ agents](https://github.com/vercel-labs/skills#supported-agents)):
 
 ```bash
-npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -g -y
+# Project install (default; required for PromptScript and some other agents)
+npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -y
 ```
 
-To target specific agents, pass `-a` (repeatable), for example `-a cursor -a claude-code`.
+Add `-g` only if your agent supports global install (for example Cursor or Claude Code). PromptScript does **not** support `-g` and will fail with `does not support global skill installation`.
+
+To target specific agents, pass `-a` (repeatable), for example `-a cursor -a claude-code -a promptscript`.
 
 Prefer letting your Agent use this Skill rather than maintaining a separate CLI logic:
 
