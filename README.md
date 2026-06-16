@@ -19,6 +19,14 @@ The repository includes one main functional skill:
 
 - `fskill-creator`: Unified skill for creating, maintaining, and migrating functional skills; internally contains create / migrate sub-skill lanes.
 
+Install it with [skills.sh](https://skills.sh/) / the Skills CLI (works with Cursor, Claude Code, Codex, and [70+ agents](https://github.com/vercel-labs/skills#supported-agents)):
+
+```bash
+npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -g -y
+```
+
+To target specific agents, pass `-a` (repeatable), for example `-a cursor -a claude-code`.
+
 Prefer letting your Agent use this Skill rather than maintaining a separate CLI logic:
 
 ```text
