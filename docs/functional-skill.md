@@ -73,10 +73,11 @@ This loop keeps changes local. A problem in a given function should become a tes
 
 Generate a reviewable proposal first:
 
-1. Identify action-oriented sections in the legacy skill.
-2. Convert those sections into candidate functions.
-3. Move shared rules to `references/`.
-4. Move duplicated or ambiguous terms to `references/shared-glossary.md`.
-5. Before large-scale behavior changes, add tests from real runs.
+1. Identify the legacy skill directory, including `SKILL.md`, `references/`, `scripts/`, and other companion files.
+2. Identify action-oriented sections in the legacy skill.
+3. Convert those sections into candidate functions.
+4. Move shared rules to `references/`.
+5. Preserve or refactor existing scripts instead of rewriting them blindly.
+6. Before large-scale behavior changes, add tests from real runs.
 
 The migrator should suggest structure; the final split requires human confirmation.

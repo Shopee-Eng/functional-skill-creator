@@ -15,7 +15,7 @@ Then let your agent use the built-in skill:
 
 ```text
 Use skills/fskill-creator to create a functional skill for <workflow>
-Use skills/fskill-creator to migrate <path-to-existing-SKILL.md>
+Use skills/fskill-creator to migrate <path-to-existing-skill-dir>
 ```
 
 ## Built-in Script Helpers
@@ -31,7 +31,7 @@ node skills/fskill-creator/scripts/lint_skill.mjs skills/<name>
 node skills/fskill-creator/scripts/test_cases.mjs examples/meeting-notes-to-actions
 
 # Generate migration proposal
-node skills/fskill-creator/sub-skills/migrate/scripts/migrate_proposal.mjs path/to/SKILL.md
+node skills/fskill-creator/sub-skills/migrate/scripts/migrate_proposal.mjs path/to/skill-dir
 ```
 
 ## Development

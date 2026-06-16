@@ -2,7 +2,7 @@
 
 | Term | Definition | Notes |
 |---|---|---|
-| `legacy_skill` | The original monolithic skill content being migrated. | Should stay reviewable until migration is accepted. |
+| `legacy_skill` | The original legacy skill package being migrated. | Includes `SKILL.md` plus companion files such as `references/`, `scripts/`, and `tools/`. |
 | `behavior_map` | A structured inventory of legacy behaviors that must be preserved. | Contains goals, inputs, outputs, rules, side effects, assumptions, and risks. |
 | `migration_proposal` | A reviewable plan of function boundaries and target layout. | Should be confirmed before writing files. |
 | `reference_plan` | A plan for moving shared terms, policies, and schemas into references. | Keeps function contracts smaller. |

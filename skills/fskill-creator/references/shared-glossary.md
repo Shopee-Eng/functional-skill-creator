@@ -5,7 +5,7 @@
 | `functional_skill` | A skill organized as `SKILL.md`, `functions/*.md`, `references/*.md`, optional scripts, tests, and traces. | `SKILL.md` handles orchestration; function files own the behavior. |
 | `function_contract` | A markdown file defining a function's purpose, inputs, outputs, logic, errors, and observability. | Should be locally reviewable. |
 | `create_context` | A normalized representation of the user's skill creation request from the create lane. | Captures goals, inputs, outputs, constraints, and open questions. |
-| `migration_context` | A structured analysis of a legacy skill from the migrate lane. | Contains behavior_map, function split proposal, reference_plan, and source_evidence. |
+| `migration_context` | A structured analysis of a legacy skill from the migrate lane. | Contains behavior_map, function split proposal, reference_plan, companion file inventory, and source_evidence. |
 | `skill_blueprint` | The unified target skill blueprint after create / migrate / enhance convergence. | The latter half of the main skill only consumes the blueprint, not raw briefs or raw legacy markdown. |
 | `file_plan` | Planned file create, update, skip, or conflict operations. | Must stay within `target_skill_path`. |
 | `script_plan` | Proposed deterministic helpers and script tests. | Only for repeatable mechanics that need no model judgment. |

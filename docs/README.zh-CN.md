@@ -4,7 +4,7 @@
 
 [English README](../README.md)
 
-Functional Skill Creator 是一套工程方法论，**面向复杂 Skill 的维护与迭代，结合 trace 日志与单元测试，它让 Skill 变得模块化、可追踪、可测试**：
+Functional Skill 是一套工程方法论，**面向复杂 Skill 的维护与迭代。结合 trace 日志与单元测试，它让 Skill 变得模块化、可追踪、可测试**：
 
 - 把每个 `Step` 当作带明确 `Input/Output` 的 `Function`（优先纯函数）
 - `SKILL.md` 只编排 `Function` 流水线，只消费 `external inputs` 与 `reference dependencies`
@@ -33,11 +33,13 @@ npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -y
 /fskill-creator create a functional skill for <workflow>
 ```
 
-**迁移** — 把现有单体 `SKILL.md` 拆成 functional skill：
+**迁移** — 把现有 legacy skill 目录重构为 functional skill：
 
 ```text
-/fskill-creator migrate <path-to-SKILL.md>
+/fskill-creator migrate <path-to-skill-dir>
 ```
+
+migrate lane 会读取整个 skill 包——`SKILL.md`、`references/`、`scripts/` 及其他伴随文件——而不是只处理单个 markdown 文件。
 
 可选参数：`include_report`、`include_unittest`、`include_viewers`（默认开启，设为 `false` 可关闭）。
 
@@ -184,7 +186,7 @@ skills/
   fskill-creator/        创建、维护或迁移 functional skill
     sub-skills/
       create/            从需求 brief 形成 create_context
-      migrate/           从 legacy SKILL.md 形成 migration_context
+      migrate/           从 legacy skill 目录形成 migration_context
 docs/                    方法论与规范
 templates/               可复用 skill 模板
 examples/                可运行的 functional skill 示例

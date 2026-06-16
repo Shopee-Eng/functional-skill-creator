@@ -10,7 +10,8 @@ Determine whether this `fskill-creator` invocation should go through the create,
 |---|---:|---|
 | `task_mode` | no | User-explicit `create`, `migrate`, `enhance`, or `validate`. |
 | `skill_request` | no | User's natural language request for the target skill. |
-| `legacy_skill_path` | no | Path to a legacy `SKILL.md`. |
+| `legacy_skill_dir` | no | Path to a legacy skill directory. |
+| `legacy_skill_path` | no | Deprecated alias for `legacy_skill_dir`; may also be a direct path to `SKILL.md`. |
 | `legacy_skill_content` | no | Legacy skill markdown content. |
 | `existing_skill_files` | no | Existing functional skill files. |
 
@@ -26,7 +27,7 @@ Determine whether this `fskill-creator` invocation should go through the create,
 ## Logic
 
 1. If the user explicitly passed a valid `task_mode`, use it.
-2. If `legacy_skill_path` or `legacy_skill_content` is present, choose `migrate`.
+2. If `legacy_skill_dir`, `legacy_skill_path`, or `legacy_skill_content` is present, choose `migrate`.
 3. If `existing_skill_files` is present and the request involves completion, enhancement, adding functions, or adding report/tests, choose `enhance`.
 4. If the request only asks to check or validate an existing skill, choose `validate`.
 5. Otherwise, choose `create`.

@@ -1,6 +1,6 @@
 ---
 name: fskill-creator
-description: Create, maintain, or migrate functional skills; supports creating from a requirement brief and migrating existing SKILL.md into a functional skill structure.
+description: Create, maintain, or migrate functional skills; supports creating from a requirement brief and migrating an existing legacy skill directory into a functional skill structure.
 ---
 
 # fskill-creator
@@ -9,7 +9,7 @@ description: Create, maintain, or migrate functional skills; supports creating f
 
 Unify the create and migrate lanes to produce a self-contained, reviewable, testable functional agent skill directory. The main skill handles routing, blueprint normalization, shared artifact generation, runtime capability provisioning, file writing, and validation; sub-skills only handle pre-analysis for their respective input forms.
 
-Use this skill when the user wants to "generate a functional skill", "create a functional skill", "add functions to an existing functional skill", or "migrate an existing SKILL.md into a functional skill".
+Use this skill when the user wants to "generate a functional skill", "create a functional skill", "add functions to an existing functional skill", or "migrate an existing legacy skill directory into a functional skill".
 
 ## Principles
 
@@ -27,7 +27,7 @@ Use this skill when the user wants to "generate a functional skill", "create a f
 | Sub-skill | When | Responsibility | Output |
 |---|---|---|---|
 | `sub-skills/create` | User provides a new skill brief or wants to enhance an existing functional skill | Normalize requirements, target path, inputs/outputs, constraints, and viewer choices | `create_context` |
-| `sub-skills/migrate` | User provides a legacy `SKILL.md`, monolithic skill content, or a migration request | Load legacy skill, identify behaviors that must be preserved, propose function boundaries and evidence | `migration_context` |
+| `sub-skills/migrate` | User provides a legacy skill directory, monolithic skill content, or a migration request | Load the legacy skill package, identify behaviors that must be preserved, propose function boundaries and evidence | `migration_context` |
 
 Sub-skills do not directly write final target skill files. Their output must go through `normalize_skill_blueprint` before entering the shared artifact pipeline.
 
@@ -38,7 +38,7 @@ Sub-skills do not directly write final target skill files. Their output must go 
 | `shared_glossary` | On demand | Stable terminology and cross-lane field semantics. |
 | `script_rules` | Before designing or drafting scripts | Rules for deciding whether deterministic work belongs in `scripts/`. |
 | `sub-skills/create` | Create lane | Form `create_context` from user brief. |
-| `sub-skills/migrate` | Migrate lane | Form `migration_context` from legacy skill. |
+| `sub-skills/migrate` | Migrate lane | Form `migration_context` from a legacy skill directory. |
 
 ## External Inputs
 
@@ -46,7 +46,8 @@ Sub-skills do not directly write final target skill files. Their output must go 
 |---|---|---|
 | `task_mode` | user or derived | `create`, `migrate`, `enhance`, or `validate`; inferred by `resolve_task_mode` when absent. |
 | `skill_request` | user | Requirement description for creating or enhancing a skill. |
-| `legacy_skill_path` | user or repository | Path to an existing monolithic `SKILL.md`. |
+| `legacy_skill_dir` | user or repository | Path to an existing legacy skill directory containing `SKILL.md` and optional companion files. |
+| `legacy_skill_path` | user or repository | Deprecated alias for `legacy_skill_dir`; may also be a direct path to `SKILL.md`, which resolves to its parent directory. |
 | `legacy_skill_content` | user | Legacy skill markdown provided when the path is inaccessible. |
 | `target_skill_path` | user or derived | Directory where the functional skill should live. |
 | `skill_name` | user or derived | Optional target skill name. |
@@ -65,9 +66,9 @@ Viewers are generated following the capability flags: `tools/log_viewer.mjs` whe
 
 | Step | Function | Purpose | Input | Output |
 |---:|---|---|---|---|
-| 1 | `resolve_task_mode` | Determine whether this request should go through create, migrate, enhance, or validate. | `task_mode`<br>`skill_request`<br>`legacy_skill_path`<br>`legacy_skill_content`<br>`existing_skill_files` | `task_context` |
+| 1 | `resolve_task_mode` | Determine whether this request should go through create, migrate, enhance, or validate. | `task_mode`<br>`skill_request`<br>`legacy_skill_dir`<br>`legacy_skill_path`<br>`legacy_skill_content`<br>`existing_skill_files` | `task_context` |
 | 2A | `sub-skills/create::collect_create_brief` | Create/enhance lane: normalize user brief. | `skill_request`<br>`target_skill_path`<br>`skill_name` | `create_context` |
-| 2B | `sub-skills/migrate::load_legacy_skill` + `map_existing_behavior` + `propose_function_split` + `extract_shared_references` | Migrate lane: read legacy skill, extract behaviors and migration evidence. | `legacy_skill_path`<br>`legacy_skill_content`<br>`migration_constraints`<br>`include_report`<br>`include_unittest`<br>`script_runtime` | `migration_context` |
+| 2B | `sub-skills/migrate::load_legacy_skill` + `map_existing_behavior` + `propose_function_split` + `extract_shared_references` | Migrate lane: read the legacy skill package, extract behaviors and migration evidence. | `legacy_skill_dir`<br>`legacy_skill_path`<br>`legacy_skill_content`<br>`migration_constraints`<br>`include_report`<br>`include_unittest`<br>`script_runtime` | `migration_context` |
 | 3 | `normalize_skill_blueprint` | Converge create / migrate / enhance inputs into a unified blueprint. | `task_context`<br>`create_context`<br>`migration_context`<br>`target_skill_path`<br>`include_report`<br>`include_unittest` | `skill_blueprint` |
 | 4 | `design_skill_structure` | Design function pipeline, references, scripts, testcases, and file layout based on blueprint. | `skill_blueprint`<br>`existing_skill_files`<br>`script_rules` | `skill_structure`<br>`script_plan`<br>`tool_plan` |
 | 5 | `draft_skill_artifacts` | Draft `SKILL.md`, function contracts, references, script specs, and testcase suggestions. | `skill_blueprint`<br>`skill_structure`<br>`script_plan` | `skill_artifacts` |

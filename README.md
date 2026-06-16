@@ -4,7 +4,7 @@
 
 [中文版 README](docs/README.zh-CN.md)
 
-Functional Skill Creator is an engineering methodology, **designed for complex Skill maintenance and iteration.**
+Functional Skill is an engineering methodology, **designed for complex Skill maintenance and iteration.**
 Combined with trace logging and unit testing, it makes Skills **modular, traceable, and testable**:
 
 - Treat each `Step` as a `Function` with explicit `Input/Output` (pure function first)
@@ -34,11 +34,13 @@ Install via [skills.sh](https://skills.sh/). Add `-a <agent>` to target one agen
 /fskill-creator create a functional skill for <workflow>
 ```
 
-**Migrate** — convert an existing monolithic `SKILL.md`:
+**Migrate** — convert an existing legacy skill directory into a functional skill:
 
 ```text
-/fskill-creator migrate <path-to-SKILL.md>
+/fskill-creator migrate <path-to-skill-dir>
 ```
+
+The migrate lane reads the whole skill package — `SKILL.md`, `references/`, `scripts/`, and other companion files — not a single markdown file in isolation.
 
 Optional: `include_report`, `include_unittest`, `include_viewers` (on by default; set to `false` to skip).
 
@@ -185,7 +187,7 @@ skills/
   fskill-creator/        Create, maintain, or migrate functional skills
     sub-skills/
       create/            Form create_context from requirement brief
-      migrate/           Form migration_context from legacy SKILL.md
+      migrate/           Form migration_context from a legacy skill directory
 docs/                    Methodology and specifications
 templates/               Reusable skill templates
 examples/                Runnable functional skill examples

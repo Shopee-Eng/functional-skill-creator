@@ -8,7 +8,7 @@ Identify legacy behaviors that must be preserved during migration.
 
 | Field | Required | Description |
 |---|---:|---|
-| `legacy_skill` | yes | Loaded source skill data. |
+| `legacy_skill` | yes | Loaded source skill package data. |
 | `migration_constraints` | no | User-provided behavior preservation or refactoring constraints. |
 
 ## Output
@@ -20,14 +20,16 @@ Identify legacy behaviors that must be preserved during migration.
 | `behavior_map.outputs` | Outputs, file writes, or side effects. |
 | `behavior_map.rules` | Rules that must be preserved. |
 | `behavior_map.platform_assumptions` | Runtime, tool, or environment assumptions. |
+| `behavior_map.companion_assets` | Existing references, scripts, tools, and testcases that must be preserved or explicitly replaced. |
 | `behavior_map.risks` | Behavior preservation risks and ambiguous areas. |
 
 ## Logic
 
-1. Extract goals, commands, decision rules, file scopes, tool assumptions, and output requirements.
-2. Preserve explicit ordering constraints from the legacy skill.
-3. Distinguish behavior from wording/style.
-4. Put unclear or conflicting rules into `risks`; do not silently resolve.
+1. Extract goals, commands, decision rules, file scopes, tool assumptions, and output requirements from `SKILL.md`.
+2. Scan `references/`, `scripts/`, and other companion files for additional rules, schemas, and deterministic behavior.
+3. Preserve explicit ordering constraints from the legacy skill.
+4. Distinguish behavior from wording/style.
+5. Put unclear or conflicting rules into `risks`; do not silently resolve.
 
 ## Errors
 
@@ -38,4 +40,4 @@ Identify legacy behaviors that must be preserved during migration.
 
 ## Observability
 
-Record counts of goals, inputs, outputs, rules, assumptions, and risks.
+Record counts of goals, inputs, outputs, rules, assumptions, companion assets, and risks.

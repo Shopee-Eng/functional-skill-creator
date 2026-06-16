@@ -30,14 +30,16 @@ Propose function boundaries, deterministic script opportunities, optional viewer
 
 ## Logic
 
-1. When available, use `scripts/migrate_proposal.mjs <legacy_skill_path>` as a first-pass helper; pass `--include-viewers true` when `include_viewers` is `true`.
-2. Group action-oriented sections into function candidates.
-3. Each function has exactly one reviewable responsibility.
-4. Preserve source section references so reviewers can trace migrated content.
-5. Avoid splitting shared policy into function-local rules.
-6. Identify deterministic legacy logic that should become, or remain as, script code.
-7. Add script test targets for helpers that preserve branching legacy behavior.
-8. When `include_viewers` is `true`, add `tools/log_viewer.mjs` and `tools/tester_viewer.mjs` to the target layout; when `false`, do not generate; when not provided, ask the user to confirm first.
+1. When available, use `scripts/migrate_proposal.mjs <legacy_skill_dir>` as a first-pass helper; pass `--include-viewers true` when `include_viewers` is `true`.
+2. Treat existing `scripts/` files as preserve-or-refactor candidates before proposing new helpers.
+3. Treat existing `references/*.md` as shared-policy sources before splitting rules into new function contracts.
+3. Group action-oriented sections into function candidates.
+4. Each function has exactly one reviewable responsibility.
+5. Preserve source section and companion file references so reviewers can trace migrated content.
+6. Avoid splitting shared policy into function-local rules.
+7. Identify deterministic legacy logic that should become, or remain as, script code.
+8. Add script test targets for helpers that preserve branching legacy behavior.
+9. When `include_viewers` is `true`, add `tools/log_viewer.mjs` and `tools/tester_viewer.mjs` to the target layout; when `false`, do not generate; when not provided, ask the user to confirm first.
 
 ## Errors
 
