@@ -47,21 +47,50 @@ A typical example is when everything keeps getting stuffed into a handful of mar
 
 ```mermaid
 flowchart TB
-  subgraph mono["Monolithic Skill"]
-    SKILL["SKILL.md<br/>Goal · Workflow · Rules · Edge cases · Output"]
-    RULES["references/rules.md<br/>Terms · Policies · Schema · Snippets"]
-    EX["references/examples.md<br/>Success · Failures · Workarounds"]
-    SCR["scripts/<br/>parse_input.js · parse_input_new.js · ..."]
+  subgraph mono["Monolithic Skill — tangled dependencies"]
+    SKILL["SKILL.md<br/>Goal · Workflow · Rules · Output · Known issues"]
+    W["Workflow + Step 1.5 patch"]
+    RL["Rules · edge cases · stop rules"]
+    OUT["Output handler · validation"]
+
+    RULES["references/rules.md<br/>Terms · policies · snippets"]
+    EX["references/examples.md<br/>Success · failures · workarounds"]
+
+    S1["parse_input.js"]
+    S2["parse_input_new.js"]
+    S3["fix_edge_case_once.sh"]
+    S4["migrate_old_do_not_delete.js"]
   end
 
-  SKILL --> RULES
-  SKILL --> EX
-  SKILL --> SCR
+  SKILL <--> W
+  SKILL <--> RL
+  W <--> RL
+  RL <--> OUT
+  SKILL <--> RULES
+  RULES <--> EX
+  EX <--> W
+  OUT <--> EX
+  W --> S1
+  RL --> S2
+  S1 <--> S2
+  S2 --> S3
+  S3 <--> EX
+  OUT --> S4
+  S4 <--> SKILL
+  S3 <--> RL
+  S1 --> OUT
 
+  style mono fill:#fff5f5,stroke:#c53030
   style SKILL fill:#fde8e8,stroke:#c53030
+  style W fill:#fde8e8,stroke:#c53030
+  style RL fill:#fde8e8,stroke:#c53030
+  style OUT fill:#fde8e8,stroke:#c53030
   style RULES fill:#fde8e8,stroke:#c53030
   style EX fill:#fde8e8,stroke:#c53030
-  style SCR fill:#fde8e8,stroke:#c53030
+  style S1 fill:#fde8e8,stroke:#c53030
+  style S2 fill:#fde8e8,stroke:#c53030
+  style S3 fill:#fde8e8,stroke:#c53030
+  style S4 fill:#fde8e8,stroke:#c53030
 ```
 
 Functional Skill Creator provides an engineering methodology that makes Skills **modular, traceable, and testable**:
@@ -75,19 +104,21 @@ Functional Skill Creator provides an engineering methodology that makes Skills *
 ### After: observable functional pipeline
 
 ```mermaid
-flowchart LR
-  ORCH["SKILL.md<br/>Orchestration only"]
+flowchart TB
+  subgraph exec["execution — compose(f₄ ∘ f₃ ∘ f₂ ∘ f₁)"]
+    direction LR
+    ORCH["SKILL.md<br/>orchestration only"] --> F1["f₁ load_input<br/>(raw) → loaded"] --> F2["f₂ extract<br/>(loaded) → req"] --> F3["f₃ generate<br/>(req) → plan"] --> F4["f₄ validate<br/>(plan) → out"]
+  end
 
-  ORCH --> F1["load_input"]
-  F1 --> F2["extract_requirements"]
-  F2 --> F3["generate_plan"]
-  F3 --> F4["validate_output"]
+  subgraph sup["supporting layers — read-only dependencies"]
+    direction LR
+    REF["references/"] --- SCR["scripts/"] --- TC["testcases/"] --- LOG["logs/runs/"]
+  end
 
-  REF["references/"] -.-> F1 & F2 & F3 & F4
-  SCR["scripts/"] -.-> F2 & F3
-  TC["testcases/"] -.-> F4
-  LOG["logs/runs/"] -.-> F1 & F2 & F3 & F4
+  exec --- sup
 
+  style exec fill:#f0fff4,stroke:#2f855a,stroke-width:2px
+  style sup fill:#ebf8ff,stroke:#2b6cb0,stroke-width:2px
   style ORCH fill:#e6ffed,stroke:#2f855a
   style F1 fill:#e6ffed,stroke:#2f855a
   style F2 fill:#e6ffed,stroke:#2f855a
