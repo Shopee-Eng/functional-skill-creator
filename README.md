@@ -29,6 +29,8 @@ Use fskill-creator to create a functional skill for <workflow>.
 Use fskill-creator to migrate <path-to-existing-SKILL.md> into a functional skill.
 ```
 
+When creating or migrating, pass `include_report` and `include_unittest` to control trace logging and test scaffolding (both enabled by default; set to `false` to disable).
+
 `fskill-creator` itself is also a functional skill: the main `SKILL.md` only handles orchestration and routing, create / migrate pre-analysis lives in `sub-skills/`, shared artifact generation lives in main `functions/*.md`, shared rules live in `references/*.md`, and deterministic helpers live under `scripts/`. When someone installs or copies only the `fskill-creator` directory, none of its required scripts are missed.
 
 When creating or migrating, you can choose whether to generate `tools/log_viewer.mjs` and `tools/tester_viewer.mjs`. If not explicitly specified, `fskill-creator` will explain the purpose of these two viewers and ask whether they are needed.
