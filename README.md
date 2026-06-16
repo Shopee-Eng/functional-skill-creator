@@ -43,50 +43,25 @@ As your Skill's capabilities iterate, your `SKILL.md` and `references/*.md` grow
 
 A typical example is when everything keeps getting stuffed into a handful of markdown files:
 
-```text
-my-skill/
-  SKILL.md                 # Thousands of lines, all behavior crammed together
-    # Goal
-    # When to use
-    # Workflow
-      ## Step 1: load input
-      ## Step 1.5: validate input
-      ## Step 2: extract requirements
-      ## Step 3: generate plan (very big)
-      ## Step 4: validate output
-    # Rules
-      ## naming rules
-      ## formatting rules
-      ## stop rules
-      ## forbidden rules
-      ## other rules
-      ## edge cases
-      ## error handling
-      ## ...
-    # Output format
-      ## Output handler
-      ## Output Validation
-    # Known issues
-  references/
-    rules.md               # Hundreds of lines — terms, policies, schemas, repeated explanations keep piling up
-      # Terms
-      # Policies
-      # Schema
-      # Validation rules
-      # Prompt snippets
-      # More edge cases
-    examples.md            # Good and bad examples mixed together, can't directly become tests
-      # Successful runs
-      # Failed runs
-      # User feedback
-      # Temporary workarounds
-  scripts/                 # Ad-hoc scripts accumulate, responsibilities and callers unclear
-    parse_input.js
-    parse_input_new.js
-    normalize_tmp.py
-    validate_output_final.js
-    fix_edge_case_once.sh
-    migrate_old_result_do_not_delete.js
+### Before: monolithic prose wall
+
+```mermaid
+flowchart TB
+  subgraph mono["Monolithic Skill"]
+    SKILL["SKILL.md<br/>Goal · Workflow · Rules · Edge cases · Output"]
+    RULES["references/rules.md<br/>Terms · Policies · Schema · Snippets"]
+    EX["references/examples.md<br/>Success · Failures · Workarounds"]
+    SCR["scripts/<br/>parse_input.js · parse_input_new.js · ..."]
+  end
+
+  SKILL --> RULES
+  SKILL --> EX
+  SKILL --> SCR
+
+  style SKILL fill:#fde8e8,stroke:#c53030
+  style RULES fill:#fde8e8,stroke:#c53030
+  style EX fill:#fde8e8,stroke:#c53030
+  style SCR fill:#fde8e8,stroke:#c53030
 ```
 
 Functional Skill Creator provides an engineering methodology that makes Skills **modular, traceable, and testable**:
@@ -97,36 +72,31 @@ Functional Skill Creator provides an engineering methodology that makes Skills *
 - Add trace logging for every `Function`, running locally, recording input/output/token consumption/duration
 - Equip every `Function` with unit tests and E2E tests, ensuring neither individual Functions nor the full pipeline regress
 
-A better structure turns your Skill into an observable functional pipeline:
+### After: observable functional pipeline
 
-```text
-my-skill/
-  SKILL.md                 # Only orchestration: declares inputs, reference dependencies, Function call order, and output scope
-    # Goal
-    # When to use
-    # External inputs
-    # References
-    # Execution pipeline (Call Functions)
-    # Output scope
-  functions/
-    load_input.md          # Defines input, output, failure states, and observation points
-    extract_requirements.md
-    generate_plan.md
-    validate_output.md
-  references/
-    glossary.md            # Shared terminology
-    policy.md              # Shared rules
-    schema.md              # Reusable data structures
-  scripts/
-    normalize_input.mjs    # Deterministic parsing / formatting / validation
-  tools/
-    log_viewer.mjs         # Optional: view function trace summaries under logs/runs
-    tester_viewer.mjs      # Optional: view regression coverage under testcases
-  testcases/
-    extract_requirements.case.json
-    validate_output.case.json
-  logs/
-    runs/                  # Local traces, can be exported as testcases
+```mermaid
+flowchart LR
+  ORCH["SKILL.md<br/>Orchestration only"]
+
+  ORCH --> F1["load_input"]
+  F1 --> F2["extract_requirements"]
+  F2 --> F3["generate_plan"]
+  F3 --> F4["validate_output"]
+
+  REF["references/"] -.-> F1 & F2 & F3 & F4
+  SCR["scripts/"] -.-> F2 & F3
+  TC["testcases/"] -.-> F4
+  LOG["logs/runs/"] -.-> F1 & F2 & F3 & F4
+
+  style ORCH fill:#e6ffed,stroke:#2f855a
+  style F1 fill:#e6ffed,stroke:#2f855a
+  style F2 fill:#e6ffed,stroke:#2f855a
+  style F3 fill:#e6ffed,stroke:#2f855a
+  style F4 fill:#e6ffed,stroke:#2f855a
+  style REF fill:#ebf8ff,stroke:#2b6cb0
+  style SCR fill:#ebf8ff,stroke:#2b6cb0
+  style TC fill:#ebf8ff,stroke:#2b6cb0
+  style LOG fill:#ebf8ff,stroke:#2b6cb0
 ```
 
 Functional Skill does not aim to make Skills complex, but to put complexity where it belongs: judgment goes to Functions, rules go into references, deterministic actions go to scripts, and regression behavior solidifies into testcases.
