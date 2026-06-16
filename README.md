@@ -40,8 +40,6 @@ Install via [skills.sh](https://skills.sh/). Add `-a <agent>` to target one agen
 /fskill-creator migrate <path-to-SKILL.md>
 ```
 
-> Slash syntax depends on your agent. In **Cursor**, `@fskill-creator` works too; natural-language prompts also work everywhere.
-
 Optional: `include_report`, `include_unittest`, `include_viewers` (on by default; set to `false` to skip).
 
 ## Why
