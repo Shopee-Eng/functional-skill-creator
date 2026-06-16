@@ -1,0 +1,35 @@
+{
+  "name": "functional-skill-creator",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Specification repository for functional authoring, migration, testing, and tracing of agent skills.",
+  "type": "module",
+  "packageManager": "npm@10.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test:skill-scripts": "node --test \"skills/fskill-creator/scripts/*.test.mjs\" \"skills/fskill-creator/sub-skills/*/scripts/*.test.mjs\"",
+    "test:example-scripts": "node --test \"examples/*/scripts/*.test.mjs\"",
+    "test:cases": "node skills/fskill-creator/scripts/test_cases.mjs skills/fskill-creator && node skills/fskill-creator/sub-skills/migrate/scripts/test_cases.mjs skills/fskill-creator/sub-skills/migrate && node skills/fskill-creator/scripts/test_cases.mjs examples/meeting-notes-to-actions",
+    "lint:examples": "node skills/fskill-creator/scripts/lint_skill.mjs examples/meeting-notes-to-actions",
+    "lint:skills": "node skills/fskill-creator/scripts/lint_skill.mjs skills/fskill-creator && node skills/fskill-creator/scripts/lint_skill.mjs skills/fskill-creator/sub-skills/create && node skills/fskill-creator/sub-skills/migrate/scripts/lint_skill.mjs skills/fskill-creator/sub-skills/migrate",
+    "check": "npm run test:skill-scripts && npm run test:example-scripts && npm run test:cases && npm run lint:examples && npm run lint:skills"
+  },
+  "keywords": [
+    "agent",
+    "skills",
+    "prompt-engineering",
+    "testing",
+    "observability"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shopee-Eng/functional-skill-creator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shopee-Eng/functional-skill-creator/issues"
+  },
+  "homepage": "https://github.com/Shopee-Eng/functional-skill-creator#readme",
+  "license": "MIT"
+}

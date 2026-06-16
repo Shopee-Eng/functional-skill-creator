@@ -1,0 +1,68 @@
+{
+  "schema_version": "0.1.0",
+  "kind": "functional_skill_testcase",
+  "case_id": "propose_function_split_basic",
+  "skill": "fskill-creator-migrate",
+  "function_name": "propose_function_split",
+  "input": {
+    "legacy_skill": {
+      "sections": [
+        { "title": "Load Input", "content": "Read the request and repository path." },
+        { "title": "Generate Plan", "content": "Create a plan from requirements." },
+        { "title": "Validate Output", "content": "Check files and tests." }
+      ]
+    },
+    "behavior_map": {
+      "goals": ["convert request into code plan"],
+      "rules": ["do not modify unrelated files"]
+    },
+    "script_runtime": "node"
+  },
+  "mock_output": {
+    "migration_proposal": {
+      "summary": {
+        "function_candidate_count": 3
+      },
+      "functions": [
+        { "name": "load_input", "source": "Load Input" },
+        { "name": "generate_plan", "source": "Generate Plan" },
+        { "name": "validate_output", "source": "Validate Output" }
+      ],
+      "file_layout": [
+        "SKILL.md",
+        "functions/load_input.md",
+        "functions/generate_plan.md",
+        "functions/validate_output.md",
+        "references/shared-glossary.md"
+      ],
+      "review_notes": ["Review each function boundary before writing files."]
+    }
+  },
+  "expected_output": {
+    "migration_proposal": {
+      "summary": {
+        "function_candidate_count": 3
+      },
+      "functions": [
+        { "name": "load_input", "source": "Load Input" },
+        { "name": "generate_plan", "source": "Generate Plan" },
+        { "name": "validate_output", "source": "Validate Output" }
+      ],
+      "file_layout": [
+        "SKILL.md",
+        "functions/load_input.md",
+        "functions/generate_plan.md",
+        "functions/validate_output.md",
+        "references/shared-glossary.md"
+      ],
+      "review_notes": ["Review each function boundary before writing files."]
+    }
+  },
+  "assertions": [
+    {
+      "type": "deep_equal",
+      "actual": "output",
+      "expected": "expected_output"
+    }
+  ]
+}

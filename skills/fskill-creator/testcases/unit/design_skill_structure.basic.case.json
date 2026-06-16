@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1.0",
+  "kind": "functional_skill_testcase",
+  "case_id": "design_skill_structure_basic",
+  "skill": "fskill-creator",
+  "function_name": "design_skill_structure",
+  "input": {
+    "skill_blueprint": {
+      "mode": "create",
+      "name": "bug-triage",
+      "goal": "Triage bug reports into severity, owner, and next action.",
+      "external_inputs": ["bug_report"],
+      "expected_outputs": ["triage_result"],
+      "constraints": ["Do not invent missing owners."]
+    }
+  },
+  "mock_output": {
+    "skill_structure": {
+      "pipeline": [
+        { "function": "load_bug_report", "purpose": "Normalize the input bug report." },
+        { "function": "classify_severity", "purpose": "Classify severity from evidence." },
+        { "function": "assign_next_action", "purpose": "Recommend a next action without inventing owners." }
+      ],
+      "functions": ["load_bug_report", "classify_severity", "assign_next_action"],
+      "references": ["references/shared-glossary.md"],
+      "testcases": ["testcases/unit/classify_severity.basic.case.json"],
+      "file_layout": ["SKILL.md", "functions/load_bug_report.md", "functions/classify_severity.md", "functions/assign_next_action.md"]
+    }
+  },
+  "expected_output": {
+    "skill_structure": {
+      "pipeline": [
+        { "function": "load_bug_report", "purpose": "Normalize the input bug report." },
+        { "function": "classify_severity", "purpose": "Classify severity from evidence." },
+        { "function": "assign_next_action", "purpose": "Recommend a next action without inventing owners." }
+      ],
+      "functions": ["load_bug_report", "classify_severity", "assign_next_action"],
+      "references": ["references/shared-glossary.md"],
+      "testcases": ["testcases/unit/classify_severity.basic.case.json"],
+      "file_layout": ["SKILL.md", "functions/load_bug_report.md", "functions/classify_severity.md", "functions/assign_next_action.md"]
+    }
+  },
+  "assertions": [
+    {
+      "type": "deep_equal",
+      "actual": "output",
+      "expected": "expected_output"
+    }
+  ]
+}

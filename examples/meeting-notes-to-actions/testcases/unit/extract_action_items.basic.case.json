@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.1.0",
+  "kind": "functional_skill_testcase",
+  "case_id": "extract_action_items_basic",
+  "skill": "meeting-notes-to-actions",
+  "function_name": "extract_action_items",
+  "input": {
+    "notes_context": {
+      "text": "Alice will send the launch checklist by Friday. Decision: use the smaller rollout group. Open question: who owns analytics?"
+    },
+    "default_due_date": "next week"
+  },
+  "expected_output": {
+    "action_items": [
+      {
+        "owner": "Alice",
+        "task": "send the launch checklist",
+        "due_date": "Friday"
+      }
+    ],
+    "decisions": [
+      "use the smaller rollout group"
+    ],
+    "open_questions": [
+      "who owns analytics?"
+    ]
+  },
+  "mock_output": {
+    "action_items": [
+      {
+        "owner": "Alice",
+        "task": "send the launch checklist",
+        "due_date": "Friday"
+      }
+    ],
+    "decisions": [
+      "use the smaller rollout group"
+    ],
+    "open_questions": [
+      "who owns analytics?"
+    ]
+  },
+  "assertions": [
+    {
+      "type": "deep_equal",
+      "actual": "output",
+      "expected": "expected_output"
+    }
+  ]
+}

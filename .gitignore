@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Local logs and traces (may contain user input)
+log/
+**/logs/runs/*.jsonl
+!**/logs/runs/.gitkeep
+
+# Environment and secrets
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.idea/
+.vscode/
