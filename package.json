@@ -9,8 +9,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "test:skill-scripts": "node --test \"skills/fskill-creator/scripts/*.test.mjs\" \"skills/fskill-creator/sub-skills/*/scripts/*.test.mjs\"",
-    "test:example-scripts": "node --test \"examples/*/scripts/*.test.mjs\"",
+    "test:skill-scripts": "node --test skills/fskill-creator/scripts/init_skill.test.mjs skills/fskill-creator/scripts/test_cases.test.mjs skills/fskill-creator/sub-skills/migrate/scripts/migrate_proposal.test.mjs",
+    "test:example-scripts": "node --test examples/meeting-notes-to-actions/scripts/normalize_meeting_notes.test.mjs",
     "test:cases": "node skills/fskill-creator/scripts/test_cases.mjs skills/fskill-creator && node skills/fskill-creator/sub-skills/migrate/scripts/test_cases.mjs skills/fskill-creator/sub-skills/migrate && node skills/fskill-creator/scripts/test_cases.mjs examples/meeting-notes-to-actions",
     "lint:examples": "node skills/fskill-creator/scripts/lint_skill.mjs examples/meeting-notes-to-actions",
     "lint:skills": "node skills/fskill-creator/scripts/lint_skill.mjs skills/fskill-creator && node skills/fskill-creator/scripts/lint_skill.mjs skills/fskill-creator/sub-skills/create && node skills/fskill-creator/sub-skills/migrate/scripts/lint_skill.mjs skills/fskill-creator/sub-skills/migrate",
