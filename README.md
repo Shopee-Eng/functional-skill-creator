@@ -44,29 +44,6 @@ The migrate lane reads the whole skill package — `SKILL.md`, `references/`, `s
 
 Optional: `include_report`, `include_unittest`, `include_viewers` (on by default; set to `false` to skip).
 
-## What Migration Surfaces
-
-Migration exposes structural issues that were already present in the legacy skill — I/O mismatches, blurred function boundaries, ambiguous step definitions, and similar. That is expected, not a migration failure. Review the proposal, fix the contracts, add testcases, and the skill will run more reliably than before.
-
-Migration does not invent new problems — it makes existing ones visible.
-
-Monolithic skills often work despite implicit handoffs: step 2 assumes something step 1 "obviously" produces, boundaries between parsing and judgment are fuzzy, and shared rules are duplicated across sections. When you split into function contracts, those assumptions become explicit — and mismatches show up immediately.
-
-Common findings after migrate:
-
-- **I/O mismatch** — a downstream function expects fields that upstream does not output
-- **Blurred boundaries** — one legacy section maps to multiple functions, or one function owns too much
-- **Ambiguous definitions** — inputs and outputs described in prose, not stable object fields
-
-Treat these as migration output, not migration failure. Suggested follow-up:
-
-1. Review `migration_proposal` and function contracts
-2. Align pipeline I/O — rename fields, split or merge functions, add entries to `references/shared-glossary.md`
-3. Run the skill once with trace enabled; export failing steps as testcases
-4. Re-run tests until the pipeline is consistent
-
-Fixing these issues is the point of migration. A skill with explicit, tested function contracts hallucinates less and fails more predictably than a prose wall that only worked by accident.
-
 ## Why
 
 Your Skill is getting bloated.
@@ -202,6 +179,29 @@ if `normalize_input` is deterministic logic, push it down into `scripts/` and wr
 Problems stay at the layer where they occur — maintenance cost does not spread across the entire skill.
 
 See methodology details in [docs/functional-skill.md](docs/functional-skill.md). Function contract specification in [docs/function-contract.md](docs/function-contract.md). When to put logic into `scripts/` in [docs/scripting.md](docs/scripting.md). Testing and trace in [docs/testing.md](docs/testing.md) and [docs/observability.md](docs/observability.md).
+
+## What Migration Surfaces
+
+Migration exposes structural issues that were already present in the legacy skill — I/O mismatches, blurred function boundaries, ambiguous step definitions, and similar. That is expected, not a migration failure. Review the proposal, fix the contracts, add testcases, and the skill will run more reliably than before.
+
+Migration does not invent new problems — it makes existing ones visible.
+
+Monolithic skills often work despite implicit handoffs: step 2 assumes something step 1 "obviously" produces, boundaries between parsing and judgment are fuzzy, and shared rules are duplicated across sections. When you split into function contracts, those assumptions become explicit — and mismatches show up immediately.
+
+Common findings after migrate:
+
+- **I/O mismatch** — a downstream function expects fields that upstream does not output
+- **Blurred boundaries** — one legacy section maps to multiple functions, or one function owns too much
+- **Ambiguous definitions** — inputs and outputs described in prose, not stable object fields
+
+Treat these as migration output, not migration failure. Suggested follow-up:
+
+1. Review `migration_proposal` and function contracts
+2. Align pipeline I/O — rename fields, split or merge functions, add entries to `references/shared-glossary.md`
+3. Run the skill once with trace enabled; export failing steps as testcases
+4. Re-run tests until the pipeline is consistent
+
+Fixing these issues is the point of migration. A skill with explicit, tested function contracts hallucinates less and fails more predictably than a prose wall that only worked by accident.
 
 ## Repository Structure
 
