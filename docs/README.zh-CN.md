@@ -43,6 +43,29 @@ migrate lane 会读取整个 skill 包——`SKILL.md`、`references/`、`script
 
 可选参数：`include_report`、`include_unittest`、`include_viewers`（默认开启，设为 `false` 可关闭）。
 
+## 迁移会暴露什么
+
+迁移会把 legacy skill 里原本就存在的结构性问题暴露出来，例如 I/O 对不上、步骤边界模糊、函数职责不清等。这是正常现象，不是迁移失败。review 提案、修正 contract、补 testcase 之后，skill 通常会比原来更稳定、更少 hallucination。
+
+迁移不会制造新问题，只是把原来隐式存在的设计问题显式化。
+
+散文式 skill 往往「能跑但靠默契」：后一步默认前一步已经产出了某字段，解析和判断混在一起，规则散落在多个章节。拆成 function contract 之后，这些假设必须写清楚，对不上的地方就会立刻露出来。
+
+迁移后常见发现：
+
+- **I/O 对不上** — 下游 function 期望的字段，上游没有定义 output
+- **边界模糊** — 一个 legacy 段落对应多个 function，或单个 function 职责过重
+- **定义含糊** — input/output 用散文描述，没有稳定字段
+
+这些都属于迁移的正常产出，不是工具故障。建议流程：
+
+1. review `migration_proposal` 和各 function contract
+2. 对齐 pipeline I/O（改字段名、拆分或合并 function、补 `references/shared-glossary.md`）
+3. 开 trace 跑一遍，把失败步骤导出为 testcase
+4. 反复跑测试，直到 pipeline 一致
+
+修这些问题才是迁移的价值。contract 清晰、有测试的 skill，比靠运气运行的散文巨兽更稳定、更少 hallucination。
+
 ## 为什么需要
 
 你的 Skill 正在膨胀。

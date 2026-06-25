@@ -81,3 +81,5 @@ Generate a reviewable proposal first:
 6. Before large-scale behavior changes, add tests from real runs.
 
 The migrator should suggest structure; the final split requires human confirmation.
+
+See [What Migration Surfaces](../README.md#what-migration-surfaces) for what to expect after migrate — I/O mismatches, blurred boundaries, and similar findings are normal migration output, not tool failure.
