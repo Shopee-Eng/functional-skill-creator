@@ -25,11 +25,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Shopee-Eng/functional-skill-creator.git"
+    "url": "https://github.com/AGI-comming/functional-skill-creator.git"
   },
   "bugs": {
-    "url": "https://github.com/Shopee-Eng/functional-skill-creator/issues"
+    "url": "https://github.com/AGI-comming/functional-skill-creator/issues"
   },
-  "homepage": "https://github.com/Shopee-Eng/functional-skill-creator#readme",
+  "homepage": "https://github.com/AGI-comming/functional-skill-creator#readme",
   "license": "MIT"
 }

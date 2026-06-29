@@ -5,7 +5,7 @@ Thanks for helping improve Functional Skill Creator.
 ## Quick Start
 
 ```bash
-git clone https://github.com/Shopee-Eng/functional-skill-creator.git
+git clone https://github.com/AGI-comming/functional-skill-creator.git
 cd functional-skill-creator
 npm install
 npm run check

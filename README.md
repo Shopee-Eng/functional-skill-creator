@@ -19,7 +19,7 @@ Combined with trace logging and unit testing, it makes Skills **modular, traceab
 ### Install
 
 ```bash
-npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -y
+npx skills add AGI-comming/functional-skill-creator --skill fskill-creator -y
 ```
 
 Install via [skills.sh](https://skills.sh/). Add `-a <agent>` to target one agent; add `-g` only if it supports global install.

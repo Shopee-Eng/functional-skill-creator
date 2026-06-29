@@ -18,7 +18,7 @@ Functional Skill 是一套工程方法论，**面向复杂 Skill 的维护与迭
 ### 安装
 
 ```bash
-npx skills add Shopee-Eng/functional-skill-creator --skill fskill-creator -y
+npx skills add AGI-comming/functional-skill-creator --skill fskill-creator -y
 ```
 
 通过 [skills.sh](https://skills.sh/) 安装。指定 agent 加 `-a <agent>`；仅当 agent 支持全局安装时再加 `-g`。

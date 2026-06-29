@@ -14,7 +14,7 @@ If you discover a security vulnerability, please report it responsibly.
 
 Instead, use one of these channels:
 
-1. **GitHub Security Advisories** (preferred): open a [private vulnerability report](https://github.com/Shopee-Eng/functional-skill-creator/security/advisories/new) on this repository.
+1. **GitHub Security Advisories** (preferred): open a [private vulnerability report](https://github.com/AGI-comming/functional-skill-creator/security/advisories/new) on this repository.
 2. **Email**: contact the repository maintainers through your organization's security contact if you already have an established channel.
 
 Please include:
